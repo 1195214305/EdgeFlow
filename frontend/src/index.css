@@ -1,0 +1,243 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 全局样式 - 现代工作流主题 */
+:root {
+  --color-bg: #f8fafc;
+  --color-text: #0f172a;
+  --color-primary: #3b82f6;
+  --color-success: #22c55e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* 工作流画布 */
+.workflow-canvas {
+  background-color: #f8fafc;
+  background-image:
+    radial-gradient(circle, #e2e8f0 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* 节点样式 */
+.workflow-node {
+  @apply bg-white rounded-xl shadow-sm border-2 border-slate-200;
+  @apply transition-all duration-200;
+  @apply hover:shadow-md hover:border-blue-300;
+}
+
+.workflow-node.selected {
+  @apply border-blue-500 shadow-lg;
+}
+
+.workflow-node.trigger {
+  @apply border-l-4 border-l-blue-500;
+}
+
+.workflow-node.action {
+  @apply border-l-4 border-l-purple-500;
+}
+
+.workflow-node.condition {
+  @apply border-l-4 border-l-amber-500;
+}
+
+.workflow-node.output {
+  @apply border-l-4 border-l-green-500;
+}
+
+/* 连接线 */
+.connection-line {
+  stroke: #3b82f6;
+  stroke-width: 2;
+  fill: none;
+}
+
+.connection-line.active {
+  stroke-dasharray: 8, 4;
+  animation: dash 1s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -12;
+  }
+}
+
+/* 节点端口 */
+.node-port {
+  @apply w-3 h-3 rounded-full bg-slate-300 border-2 border-white;
+  @apply transition-all duration-200;
+  @apply hover:bg-blue-500 hover:scale-125;
+}
+
+.node-port.connected {
+  @apply bg-blue-500;
+}
+
+/* 侧边栏节点 */
+.sidebar-node {
+  @apply flex items-center gap-3 p-3 rounded-lg cursor-grab;
+  @apply bg-white border border-slate-200;
+  @apply transition-all duration-200;
+  @apply hover:border-blue-300 hover:shadow-sm;
+  @apply active:cursor-grabbing;
+}
+
+/* 执行状态 */
+.execution-status {
+  @apply inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium;
+}
+
+.execution-status.running {
+  @apply bg-blue-100 text-blue-700;
+}
+
+.execution-status.success {
+  @apply bg-green-100 text-green-700;
+}
+
+.execution-status.failed {
+  @apply bg-red-100 text-red-700;
+}
+
+.execution-status.pending {
+  @apply bg-slate-100 text-slate-600;
+}
+
+/* 按钮样式 */
+.btn-primary {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+  @apply bg-blue-600 text-white;
+  @apply hover:bg-blue-700 hover:shadow-lg;
+  @apply active:scale-95;
+}
+
+.btn-secondary {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+  @apply bg-white text-slate-700 border border-slate-200;
+  @apply hover:bg-slate-50 hover:border-slate-300;
+}
+
+.btn-success {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+  @apply bg-green-600 text-white;
+  @apply hover:bg-green-700;
+}
+
+/* 输入框 */
+.input-field {
+  @apply w-full px-3 py-2 rounded-lg;
+  @apply bg-white border border-slate-200;
+  @apply text-slate-900 placeholder-slate-400;
+  @apply focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20;
+}
+
+/* 卡片 */
+.card {
+  @apply bg-white rounded-xl shadow-sm border border-slate-200;
+}
+
+/* 流动动画 */
+.flow-animation {
+  position: relative;
+  overflow: hidden;
+}
+
+.flow-animation::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+  animation: flow-shine 2s infinite;
+}
+
+@keyframes flow-shine {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* 脉冲点 */
+.pulse-dot {
+  @apply w-2 h-2 rounded-full bg-green-500;
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+}
+
+/* 代码块 */
+.code-block {
+  @apply font-mono text-sm bg-slate-900 text-slate-100 rounded-lg p-4;
+  @apply overflow-x-auto;
+}
+
+/* 标签 */
+.tag {
+  @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium;
+  @apply bg-slate-100 text-slate-600;
+}
+
+.tag.blue {
+  @apply bg-blue-100 text-blue-700;
+}
+
+.tag.green {
+  @apply bg-green-100 text-green-700;
+}
+
+.tag.purple {
+  @apply bg-purple-100 text-purple-700;
+}
+
+.tag.amber {
+  @apply bg-amber-100 text-amber-700;
+}
